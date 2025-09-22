@@ -1,11 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_key'
 
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Missing Supabase environment variables')
-}
+// In development, we'll use placeholder values and handle errors gracefully
+const isDevelopment = supabaseUrl.includes('placeholder') || supabaseKey.includes('placeholder')
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
@@ -18,3 +17,6 @@ export const supabase = createClient(supabaseUrl, supabaseKey, {
     },
   },
 })
+
+// Export development flag for components to handle gracefully
+export { isDevelopment }

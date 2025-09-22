@@ -1,4 +1,5 @@
 import { VotingPanel } from '@/components/voting/VotingPanel'
+import { StoryViewer } from '@/components/story/StoryViewer'
 
 export default function HomePage() {
   return (
@@ -13,28 +14,13 @@ export default function HomePage() {
           </p>
         </header>
 
-        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          <div>
+        <div className="grid xl:grid-cols-5 gap-8 max-w-7xl mx-auto">
+          <div className="xl:col-span-2">
             <VotingPanel />
           </div>
 
-          <div className="card">
-            <h2 className="text-2xl font-semibold mb-4 text-secondary">
-              Current Story
-            </h2>
-            <div className="text-center py-8">
-              <p className="text-gray-400 mb-4">
-                No story in progress
-              </p>
-              <div className="bg-gray-700 rounded-lg p-4">
-                <p className="text-sm text-gray-300">
-                  Episodes: 0
-                </p>
-                <p className="text-sm text-gray-300">
-                  Duration: 0:00
-                </p>
-              </div>
-            </div>
+          <div className="xl:col-span-3">
+            <StoryViewer />
           </div>
         </div>
 
