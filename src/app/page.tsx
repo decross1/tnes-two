@@ -1,3 +1,5 @@
+import { VotingPanel } from '@/components/voting/VotingPanel'
+
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-background via-purple-900/20 to-background">
@@ -11,24 +13,9 @@ export default function HomePage() {
           </p>
         </header>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          <div className="card">
-            <h2 className="text-2xl font-semibold mb-4 text-primary">
-              Current Voting Session
-            </h2>
-            <div className="text-center py-8">
-              <p className="text-gray-400 mb-4">
-                Voting session will be available soon
-              </p>
-              <div className="bg-gray-700 rounded-lg p-4">
-                <p className="text-sm text-gray-300">
-                  Next session: Character/Subject
-                </p>
-                <p className="text-lg font-mono text-accent">
-                  Starting soon...
-                </p>
-              </div>
-            </div>
+        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div>
+            <VotingPanel />
           </div>
 
           <div className="card">
