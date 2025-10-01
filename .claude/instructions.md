@@ -45,6 +45,7 @@ You are working on StoryWeaver, a collaborative storytelling web app where users
 - Test with slow network conditions
 
 ## Specific Project Rules
+- When trying to run anything node, always use nvm
 
 ### Voting System
 - Sessions run at 8am, 10am, 12pm, 2pm (2 hours each)
