@@ -113,10 +113,10 @@ export function VotingPanel() {
     return (
       <div className="space-y-6">
         <div className="card animate-pulse">
-          <div className="h-20 bg-gray-700 rounded"></div>
+          <div className="h-20 bg-card rounded"></div>
         </div>
         <div className="card animate-pulse">
-          <div className="h-32 bg-gray-700 rounded"></div>
+          <div className="h-32 bg-card rounded"></div>
         </div>
       </div>
     )
@@ -135,18 +135,18 @@ export function VotingPanel() {
               hasSubmitted={hasSubmitted}
             />
           ) : (
-            <div className="card bg-green-900/20 border-green-500/20">
+            <div className="card-success">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-success rounded-full flex items-center justify-center flex-shrink-0">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-green-400">Phrase Submitted!</h3>
-                  <p className="text-sm text-green-300">
-                    {hasVoted 
-                      ? "Thanks for voting! Results at 4pm." 
+                  <h3 className="font-semibold text-success">Phrase Submitted!</h3>
+                  <p className="text-sm text-success/80">
+                    {hasVoted
+                      ? "Thanks for voting! Results at 4pm."
                       : "Now vote on other submissions below."
                     }
                   </p>
@@ -164,12 +164,12 @@ export function VotingPanel() {
         </div>
       ) : (
         <div className="card text-center py-8">
-          <div className="text-gray-400 mb-4">
-            <svg className="w-16 h-16 mx-auto mb-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="mb-4">
+            <svg className="w-16 h-16 mx-auto mb-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h3 className="text-lg font-semibold text-gray-300 mb-2">No Active Voting Session</h3>
-            <p className="text-sm text-gray-500">
+            <h3 className="text-lg font-medium text-text-primary mb-2">No Active Voting Session</h3>
+            <p className="text-sm text-text-secondary">
               Check back during voting windows:<br />
               8-10am, 10am-12pm, 12-2pm, 2-4pm
             </p>

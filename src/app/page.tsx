@@ -3,48 +3,53 @@ import { StoryViewer } from '@/components/story/StoryViewer'
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-background via-purple-900/20 to-background">
-      <div className="container mx-auto px-4 py-8">
-        <header className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-heading font-bold text-gradient mb-4">
+    <main className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-6 md:py-8 max-w-5xl">
+        {/* Header */}
+        <header className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-semibold text-text-primary mb-2">
             StoryWeaver
           </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Create animated stories together through daily collaborative voting
+          <div className="w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mb-3"></div>
+          <p className="text-base md:text-lg text-text-secondary max-w-2xl">
+            Create animated stories together through collaborative voting
           </p>
         </header>
 
-        <div className="grid xl:grid-cols-5 gap-8 max-w-7xl mx-auto">
-          <div className="xl:col-span-2">
-            <VotingPanel />
+        {/* Main Content - Mobile: Stack, Desktop: 2-column */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-8">
+          {/* Story Viewer - Show first on mobile for immediate engagement */}
+          <div className="order-1 lg:order-2">
+            <StoryViewer />
           </div>
 
-          <div className="xl:col-span-3">
-            <StoryViewer />
+          {/* Voting Panel */}
+          <div className="order-2 lg:order-1">
+            <VotingPanel />
           </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <div className="card max-w-2xl mx-auto">
-            <h3 className="text-xl font-semibold mb-4">How it works</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-300">
-              <div>
-                <div className="font-medium text-white mb-2">Daily Voting</div>
-                <p>Submit and vote on words/phrases during 4 daily sessions</p>
-              </div>
-              <div>
-                <div className="font-medium text-white mb-2">Story Creation</div>
-                <p>Winning words generate animated scenes at 4pm daily</p>
-              </div>
-              <div>
-                <div className="font-medium text-white mb-2">Watch Together</div>
-                <p>View the growing collaborative story as it unfolds</p>
-              </div>
-              <div>
-                <div className="font-medium text-white mb-2">Anonymous</div>
-                <p>No sign-up required - just join and start creating</p>
-              </div>
+        {/* How It Works - Simplified */}
+        <div className="card max-w-2xl mx-auto">
+          <h3 className="text-xl font-medium text-text-primary mb-4">How It Works</h3>
+          <div className="space-y-3 text-sm text-text-secondary">
+            <div className="flex items-start space-x-3">
+              <span className="flex-shrink-0 w-6 h-6 bg-primary/20 text-primary rounded-full flex items-center justify-center text-xs font-semibold">1</span>
+              <p><span className="font-medium text-text-primary">Submit</span> a phrase (up to 10 words)</p>
             </div>
+            <div className="flex items-start space-x-3">
+              <span className="flex-shrink-0 w-6 h-6 bg-primary/20 text-primary rounded-full flex items-center justify-center text-xs font-semibold">2</span>
+              <p><span className="font-medium text-text-primary">Vote</span> for your favorite submissions</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <span className="flex-shrink-0 w-6 h-6 bg-primary/20 text-primary rounded-full flex items-center justify-center text-xs font-semibold">3</span>
+              <p><span className="font-medium text-text-primary">Watch</span> the winning phrase become an animated episode</p>
+            </div>
+          </div>
+          <div className="mt-4 pt-4 border-t border-border">
+            <p className="text-xs text-text-muted text-center">
+              No sign-up required • Fully anonymous • New episodes daily
+            </p>
           </div>
         </div>
       </div>
