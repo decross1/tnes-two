@@ -35,26 +35,23 @@ export function WordSubmission({ session, onSubmissionSuccess, hasSubmitted }: W
       const anonymousUserId = await getAnonymousUserId()
       const sanitizedPhrase = sanitizePhrase(phrase)
       
-      // Hash IP for rate limiting (client-side approximation)
-      const ipHash = await generateIPHash()
-
-      const { error: submitError } = await supabase
-        .from('submissions')
-        .insert({
+      const response = await fetch('/api/submissions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           phrase: sanitizedPhrase,
-          word_count: validation.wordCount,
-          session_date: session.date,
-          session_time: session.time,
-          anonymous_user_id: anonymousUserId,
-          ip_hash: ipHash
+          sessionDate: session.date,
+          sessionTime: session.time,
+          anonymousUserId: anonymousUserId
         })
+      })
 
-      if (submitError) {
-        if (submitError.code === '23505') {
-          setError('You have already submitted for this session')
-        } else {
-          setError('Failed to submit phrase. Please try again.')
-        }
+      const data = await response.json()
+
+      if (!response.ok) {
+        setError(data.error || 'Failed to submit phrase')
         return
       }
 
@@ -68,15 +65,6 @@ export function WordSubmission({ session, onSubmissionSuccess, hasSubmitted }: W
     }
   }
 
-  const generateIPHash = async (): Promise<string> => {
-    // Simple client-side hash for rate limiting
-    // In production, this would be done server-side
-    const encoder = new TextEncoder()
-    const data = encoder.encode(Date.now().toString())
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-    const hashArray = Array.from(new Uint8Array(hashBuffer))
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
-  }
 
   if (hasSubmitted) {
     return (

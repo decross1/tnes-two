@@ -24,16 +24,14 @@ export function VotingList({ session, onVote, hasVoted, userSubmissionId }: Voti
 
   const loadSubmissions = async () => {
     try {
-      const { data, error } = await supabase
-        .from('submissions')
-        .select('*')
-        .eq('session_date', session.date)
-        .eq('session_time', session.time)
-        .order('votes', { ascending: false })
-        .order('created_at', { ascending: true })
+      const response = await fetch(`/api/submissions?sessionDate=${session.date}&sessionTime=${session.time}`)
+      const data = await response.json()
 
-      if (error) throw error
-      setSubmissions(data || [])
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to load submissions')
+      }
+
+      setSubmissions(data.submissions || [])
     } catch (err) {
       console.error('Error loading submissions:', err)
       setError('Failed to load submissions')
@@ -51,21 +49,23 @@ export function VotingList({ session, onVote, hasVoted, userSubmissionId }: Voti
     try {
       const anonymousUserId = await getAnonymousUserId()
 
-      const { error: voteError } = await supabase
-        .from('votes')
-        .insert({
-          submission_id: submissionId,
-          anonymous_user_id: anonymousUserId,
-          session_date: session.date,
-          session_time: session.time
+      const response = await fetch('/api/votes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          submissionId: submissionId,
+          anonymousUserId: anonymousUserId,
+          sessionDate: session.date,
+          sessionTime: session.time
         })
+      })
 
-      if (voteError) {
-        if (voteError.code === '23505') {
-          setError('You have already voted in this session')
-        } else {
-          setError('Failed to cast vote. Please try again.')
-        }
+      const data = await response.json()
+
+      if (!response.ok) {
+        setError(data.error || 'Failed to cast vote')
         return
       }
 

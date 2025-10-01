@@ -27,19 +27,15 @@ export async function getCurrentStory(): Promise<Story | null> {
   }
 
   try {
-    const { data, error } = await supabase
-      .from('stories')
-      .select('*')
-      .eq('is_complete', false)
-      .order('created_at', { ascending: false })
-      .single()
+    const response = await fetch('/api/stories?currentOnly=true')
+    const data = await response.json()
 
-    if (error && error.code !== 'PGRST116') { // Not found is ok
-      console.error('Error fetching current story:', error)
+    if (!response.ok) {
+      console.error('Error fetching current story:', data.error)
       return null
     }
 
-    return data
+    return data.story
   } catch (err) {
     console.error('Error in getCurrentStory:', err)
     return null
@@ -84,18 +80,15 @@ export async function getStoryEpisodes(storyId: string): Promise<Episode[]> {
   }
 
   try {
-    const { data, error } = await supabase
-      .from('episodes')
-      .select('*')
-      .eq('story_id', storyId)
-      .order('episode_number', { ascending: true })
+    const response = await fetch(`/api/episodes?storyId=${storyId}`)
+    const data = await response.json()
 
-    if (error) {
-      console.error('Error fetching episodes:', error)
+    if (!response.ok) {
+      console.error('Error fetching episodes:', data.error)
       return []
     }
 
-    return data || []
+    return data.episodes || []
   } catch (err) {
     console.error('Error in getStoryEpisodes:', err)
     return []

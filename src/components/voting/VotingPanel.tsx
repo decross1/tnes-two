@@ -73,28 +73,19 @@ export function VotingPanel() {
     try {
       const anonymousUserId = await getAnonymousUserId()
 
-      // Check if user has submitted
-      const { data: submission } = await supabase
-        .from('submissions')
-        .select('id')
-        .eq('session_date', currentSession.date)
-        .eq('session_time', currentSession.time)
-        .eq('anonymous_user_id', anonymousUserId)
-        .single()
+      const response = await fetch(
+        `/api/votes?sessionDate=${currentSession.date}&sessionTime=${currentSession.time}&anonymousUserId=${anonymousUserId}`
+      )
+      
+      const data = await response.json()
 
-      setHasSubmitted(!!submission)
-      setUserSubmissionId(submission?.id)
-
-      // Check if user has voted
-      const { data: vote } = await supabase
-        .from('votes')
-        .select('id')
-        .eq('session_date', currentSession.date)
-        .eq('session_time', currentSession.time)
-        .eq('anonymous_user_id', anonymousUserId)
-        .single()
-
-      setHasVoted(!!vote)
+      if (response.ok) {
+        setHasSubmitted(data.hasSubmitted)
+        setHasVoted(data.hasVoted)
+        setUserSubmissionId(data.submissionId)
+      } else {
+        console.error('Error checking user status:', data.error)
+      }
     } catch (error) {
       console.error('Error checking user status:', error)
     } finally {
