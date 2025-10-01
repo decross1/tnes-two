@@ -40,7 +40,7 @@ export function VotingTimer({ onSessionChange }: VotingTimerProps) {
 
   if (currentSession) {
     return (
-      <div className="card bg-gradient-to-br from-primary/20 to-secondary/20 border-primary/30">
+      <div className="card bg-gradient-to-br from-primary/20 to-secondary/20 border-primary/30 lg:h-full lg:flex lg:flex-col lg:justify-center">
         <div className="flex items-center justify-between mb-3">
           <div>
             <h3 className="text-lg font-semibold text-white">Voting Active</h3>
@@ -50,7 +50,7 @@ export function VotingTimer({ onSessionChange }: VotingTimerProps) {
           </div>
           <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
         </div>
-        
+
         <div className="bg-black/20 rounded-lg p-3">
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-300">Time remaining:</span>
@@ -58,21 +58,21 @@ export function VotingTimer({ onSessionChange }: VotingTimerProps) {
               {formatTimeRemaining(timeUntilEnd)}
             </span>
           </div>
-          
+
           <div className="mt-2 bg-gray-700 rounded-full h-2">
-            <div 
+            <div
               className="bg-gradient-to-r from-accent to-secondary h-2 rounded-full transition-all duration-1000"
-              style={{ 
-                width: `${Math.max(0, (timeUntilEnd / (2 * 60 * 60 * 1000)) * 100)}%` 
+              style={{
+                width: `${Math.max(0, (timeUntilEnd / (2 * 60 * 60 * 1000)) * 100)}%`
               }}
             />
           </div>
         </div>
-        
+
         <p className="text-xs text-gray-400 mt-2">
-          Session ends at {currentSession.endTime.toLocaleTimeString([], { 
-            hour: '2-digit', 
-            minute: '2-digit' 
+          Session ends at {currentSession.endTime.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
           })}
         </p>
       </div>
@@ -80,7 +80,7 @@ export function VotingTimer({ onSessionChange }: VotingTimerProps) {
   }
 
   return (
-    <div className="card bg-gray-800/50 border-gray-600">
+    <div className="card bg-gray-800/50 border-gray-600 lg:h-full lg:flex lg:flex-col lg:justify-center">
       <div className="flex items-center justify-between mb-3">
         <div>
           <h3 className="text-lg font-semibold text-gray-300">Next Session</h3>
@@ -90,7 +90,7 @@ export function VotingTimer({ onSessionChange }: VotingTimerProps) {
         </div>
         <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
       </div>
-      
+
       <div className="bg-black/20 rounded-lg p-3">
         <div className="flex justify-between items-center">
           <span className="text-sm text-gray-400">Starts in:</span>
@@ -99,13 +99,13 @@ export function VotingTimer({ onSessionChange }: VotingTimerProps) {
           </span>
         </div>
       </div>
-      
+
       <p className="text-xs text-gray-500 mt-2">
-        Voting opens at {nextSession.startTime.toLocaleTimeString([], { 
-          hour: '2-digit', 
-          minute: '2-digit' 
+        Voting opens at {nextSession.startTime.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit'
         })}
-        {nextSession.startTime.toDateString() !== new Date().toDateString() && 
+        {nextSession.startTime.toDateString() !== new Date().toDateString() &&
           ` on ${nextSession.startTime.toLocaleDateString()}`
         }
       </p>

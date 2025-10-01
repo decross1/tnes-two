@@ -123,11 +123,15 @@ export function VotingPanel() {
   }
 
   return (
-    <div className="space-y-6">
-      <VotingTimer onSessionChange={handleSessionChange} />
-      
+    <div className="flex flex-col space-y-4 lg:h-full">
+      {/* Voting Timer - 30% height */}
+      <div className="lg:h-[30%]">
+        <VotingTimer onSessionChange={handleSessionChange} />
+      </div>
+
+      {/* Voting Content - 70% height */}
       {currentSession ? (
-        <div className="space-y-6">
+        <div className="flex flex-col space-y-4 lg:flex-1 lg:overflow-hidden">
           {!hasSubmitted ? (
             <WordSubmission
               session={currentSession}
@@ -154,16 +158,18 @@ export function VotingPanel() {
               </div>
             </div>
           )}
-          
-          <VotingList
-            session={currentSession}
-            onVote={handleVote}
-            hasVoted={hasVoted}
-            userSubmissionId={userSubmissionId}
-          />
+
+          <div className="lg:flex-1 lg:overflow-auto">
+            <VotingList
+              session={currentSession}
+              onVote={handleVote}
+              hasVoted={hasVoted}
+              userSubmissionId={userSubmissionId}
+            />
+          </div>
         </div>
       ) : (
-        <div className="card text-center py-8">
+        <div className="card text-center py-8 lg:flex-1 lg:flex lg:flex-col lg:justify-center">
           <div className="mb-4">
             <svg className="w-16 h-16 mx-auto mb-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
