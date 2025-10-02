@@ -108,10 +108,10 @@ export function VideoPlayer({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="card lg:h-full lg:flex lg:flex-col lg:p-0">
       {/* Video with integrated header */}
-      <div className="relative">
-        <div className="aspect-video bg-card rounded-lg overflow-hidden">
+      <div className="relative lg:flex-1 lg:m-4">
+        <div className="aspect-video bg-card rounded-lg overflow-hidden lg:h-auto">
           {loading && (
             <div className="absolute inset-0 flex items-center justify-center bg-surface">
               <div className="text-center">
@@ -233,7 +233,7 @@ export function VideoPlayer({
 
       {/* Episode Info below video */}
       {currentEpisode.story_prompt && (
-        <div className="px-1">
+        <div className="lg:mx-4 lg:mb-4 lg:pt-3 border-t border-border">
           <p className="text-xs text-text-secondary">
             <span className="font-medium text-text-primary">Scene: </span>
             {currentEpisode.story_prompt}

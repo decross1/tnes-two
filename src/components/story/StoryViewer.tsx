@@ -113,7 +113,7 @@ export function StoryViewer() {
       )}
 
       {/* Video Player - 70% height */}
-      <div className="card lg:flex-1 lg:flex lg:flex-col lg:overflow-hidden">
+      <div className="lg:flex-1 lg:overflow-hidden">
         <VideoPlayer
           episodes={episodes}
           currentEpisodeIndex={currentEpisodeIndex}
