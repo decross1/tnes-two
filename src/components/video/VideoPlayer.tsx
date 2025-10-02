@@ -108,42 +108,26 @@ export function VideoPlayer({
   }
 
   return (
-    <div className="card">
-      <div className="mb-4">
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-lg font-semibold text-white">
-            Episode {currentEpisode.episode_number}
-          </h3>
-          <span className="text-sm text-gray-400">
-            {currentEpisodeIndex + 1} of {episodes.length}
-          </span>
-        </div>
-        
-        {currentEpisode.winning_phrase && (
-          <p className="text-sm text-accent italic">
-            "{currentEpisode.winning_phrase}"
-          </p>
-        )}
-      </div>
-
-      <div className="relative">
-        <div className="aspect-video bg-black rounded-lg overflow-hidden">
+    <div className="card lg:h-full lg:flex lg:flex-col lg:p-0">
+      {/* Video with integrated header */}
+      <div className="relative lg:flex-1 lg:m-4">
+        <div className="aspect-video bg-card rounded-lg overflow-hidden lg:h-auto">
           {loading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+            <div className="absolute inset-0 flex items-center justify-center bg-surface">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mb-4"></div>
-                <p className="text-gray-400">Loading episode...</p>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+                <p className="text-text-secondary">Loading episode...</p>
               </div>
             </div>
           )}
 
           {error && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+            <div className="absolute inset-0 flex items-center justify-center bg-surface">
               <div className="text-center">
-                <svg className="w-12 h-12 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-12 h-12 text-error mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p className="text-red-400">{error}</p>
+                <p className="text-error">{error}</p>
               </div>
             </div>
           )}
@@ -168,73 +152,90 @@ export function VideoPlayer({
               }
             }}
           />
-        </div>
 
-        {/* Custom Controls */}
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-          {/* Progress Bar */}
-          <div className="mb-3">
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={played * 100}
-              onChange={(e) => handleSeek(Number(e.target.value))}
-              className="w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
-            />
+          {/* Title overlay at top */}
+          <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 to-transparent p-3">
+            <div className="flex justify-between items-center">
+              <h3 className="text-base font-semibold text-white">
+                Episode {currentEpisode.episode_number}
+              </h3>
+              <span className="text-xs text-gray-300">
+                {currentEpisodeIndex + 1} of {episodes.length}
+              </span>
+            </div>
+            {currentEpisode.winning_phrase && (
+              <p className="text-xs text-primary italic mt-1">
+                "{currentEpisode.winning_phrase}"
+              </p>
+            )}
           </div>
 
-          {/* Control Buttons */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={goToPrevious}
-                disabled={currentEpisodeIndex === 0}
-                className="p-2 text-white hover:text-accent disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              <button
-                onClick={togglePlayPause}
-                className="p-3 bg-accent hover:bg-accent/80 rounded-full text-black transition-colors"
-              >
-                {playing ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-7 4h12a2 2 0 002-2V8a2 2 0 00-2-2H7a2 2 0 00-2 2v4a2 2 0 002 2z" />
-                  </svg>
-                )}
-              </button>
-
-              <button
-                onClick={goToNext}
-                disabled={currentEpisodeIndex === episodes.length - 1}
-                className="p-2 text-white hover:text-accent disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+          {/* Custom Controls at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3">
+            {/* Progress Bar */}
+            <div className="mb-2">
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={played * 100}
+                onChange={(e) => handleSeek(Number(e.target.value))}
+                className="w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
+              />
             </div>
 
-            <div className="text-white text-sm">
-              {Math.floor(played * duration / 60)}:{Math.floor((played * duration) % 60).toString().padStart(2, '0')} / {Math.floor(duration / 60)}:{Math.floor(duration % 60).toString().padStart(2, '0')}
+            {/* Control Buttons */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={goToPrevious}
+                  disabled={currentEpisodeIndex === 0}
+                  className="p-1.5 text-white hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+
+                <button
+                  onClick={togglePlayPause}
+                  className="p-2 bg-primary hover:bg-primary-light rounded-full text-white transition-colors"
+                >
+                  {playing ? (
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  )}
+                </button>
+
+                <button
+                  onClick={goToNext}
+                  disabled={currentEpisodeIndex === episodes.length - 1}
+                  className="p-1.5 text-white hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="text-white text-xs font-mono">
+                {Math.floor(played * duration / 60)}:{Math.floor((played * duration) % 60).toString().padStart(2, '0')} / {Math.floor(duration / 60)}:{Math.floor(duration % 60).toString().padStart(2, '0')}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Episode Info */}
+      {/* Episode Info below video */}
       {currentEpisode.story_prompt && (
-        <div className="mt-4 p-3 bg-gray-800/50 rounded-lg">
-          <p className="text-sm text-gray-300">
-            <span className="font-medium text-white">Scene: </span>
+        <div className="lg:mx-4 lg:mb-4 lg:pt-3 border-t border-border">
+          <p className="text-xs text-text-secondary">
+            <span className="font-medium text-text-primary">Scene: </span>
             {currentEpisode.story_prompt}
           </p>
         </div>

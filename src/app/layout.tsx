@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'StoryWeaver - Collaborative Animated Shorts',
   description: 'Create animated stories together through daily voting',
   viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#6B46C1',
+  themeColor: '#0891B2',
 }
 
 export default function RootLayout({
